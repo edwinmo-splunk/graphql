@@ -156,6 +156,9 @@ func SelectedFields(source ast.SelectionSet) []*ast.Field {
 			fields = append(fields, selection)
 		case *CollectedField:
 			fields = append(fields, selection.Field)
+		case *ast.InlineFragment:
+			selectionSet := selection.SelectionSet
+			fields = append(fields, SelectedFields(selectionSet)...)
 		}
 	}
 
